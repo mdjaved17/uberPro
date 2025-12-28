@@ -1,15 +1,24 @@
-const dotenv= require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors= require('cors');
+const cors = require("cors");
+
+const mongoose = require("mongoose");
+const connectDB = require("./db/db");
+const userRoutes = require("./routes/user.routes");
+
+connectDB();
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req,res) =>{
-    res.send("port is working");
-})
+app.get("/", (req, res) => {
+  res.send("port is working");
+});
 
 
+app.use("/users", userRoutes);
 
-module.exports= app;
+module.exports = app;
